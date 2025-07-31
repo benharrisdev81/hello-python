@@ -14,10 +14,10 @@ steps:
     commands:
       - apk add --no-cache openssh
       - mkdir -p ~/.ssh
-      - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+      - printf "%s\n" "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
       - chmod 600 ~/.ssh/id_rsa
       - ssh-keyscan gitea >> ~/.ssh/known_hosts
-      - git clone ssh://git@gitea:22/ben/hello-python.git .
+      - GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=yes" git clone ssh://git@gitea:22/ben/hello-python.git .
     network_mode: vm-dev-net
 
   - name: test
