@@ -1,6 +1,7 @@
 services:
   app:
     build: .
+    image: hello-python:latest
     container_name: hello-python
     volumes:
       - .:/app
