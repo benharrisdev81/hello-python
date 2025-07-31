@@ -6,6 +6,12 @@ clone:
   disable: true
 
 steps:
+  - name: clone
+    image: alpine/git
+    commands:
+        - git clone ssh://git@gitea:2222/ben/dashy.git .
+    network_mode: vm-dev-net
+
   - name: test
     image: python:3.12-slim
     commands:
