@@ -8,8 +8,16 @@ clone:
 steps:
   - name: clone
     image: alpine/git
+    environment:
+      SSH_PRIVATE_KEY:
+        from_secret: SSH_PRIVATE_KEY
     commands:
-        - git clone ssh://git@gitea:22/ben/dashy.git .
+      - apk add --no-cache openssh
+      - mkdir -p ~/.ssh
+      - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+      - chmod 600 ~/.ssh/id_rsa
+      - ssh-keyscan gitea >> ~/.ssh/known_hosts
+      - git clone ssh://git@gitea:22/ben/hello-python.git .
     network_mode: vm-dev-net
 
   - name: test
