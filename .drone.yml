@@ -9,7 +9,7 @@ steps:
   - name: clone
     image: alpine/git
     commands:
-        - git clone ssh://git@gitea:2222/ben/dashy.git .
+        - git clone ssh://git@gitea:22/ben/dashy.git .
     network_mode: vm-dev-net
 
   - name: test
