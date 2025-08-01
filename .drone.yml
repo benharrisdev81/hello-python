@@ -14,10 +14,13 @@ steps:
     commands:
       - apk add --no-cache openssh
       - mkdir -p ~/.ssh
-      - printf "%s\n" "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-      - chmod 600 ~/.ssh/id_rsa
+      # write Ed25519 key
+      - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+      - chmod 600 ~/.ssh/id_ed25519
+      # add Gitea host key
       - ssh-keyscan gitea >> ~/.ssh/known_hosts
-      - GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=yes" git clone ssh://git@gitea:22/ben/hello-python.git .
+      # force Git to use Ed25519 key
+      - GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=yes" git clone ssh://git@gitea:22/ben/hello-python.git .
     network_mode: vm-dev-net
 
   - name: test
