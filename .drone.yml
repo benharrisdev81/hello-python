@@ -27,5 +27,5 @@ steps:
     image: python:3.12-slim
     commands:
       - pip install -r requirements.txt
-      - pytest
+      - PYTHONPATH=. pytest
     network_mode: vm-dev-net
